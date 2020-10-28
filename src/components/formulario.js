@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
+import { v4 as uuidv4} from 'uuid';
 
-const Formulario = () => {
+const Formulario = ({crearCita}) => {
 
     // Crear State de Citas
 
@@ -36,18 +37,36 @@ const Formulario = () => {
             return;
         }
 
+        // Eliminar el mensaje previo
+
+        actualizarError(false);
+        
 
         // Asignar un ID
 
-        // Crear la cita 
+        cita.id = uuidv4();
+        console.log(cita)
+
+
+        // Crear la cita
+
+        crearCita(cita);
 
         // Reiniciar el form
+
+        actualizarCita({
+            mascota: '',
+            propietario: '',
+            fecha: '',
+            hora: '',
+            sintomas: ''
+        })
     }
 
     return (
         <Fragment>
             <h2>Crear Cita</h2>
-            {error ? <p className="alerta-error">Todoslos campos son obligatorios</p> :null}
+            {error ? <p className="alerta-error">Todoslos campos son obligatorios </p> :null}
             <form
                 onSubmit = {submitCita}
             >
